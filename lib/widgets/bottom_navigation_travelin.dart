@@ -15,13 +15,15 @@ class BottomNavigationTravelin extends StatefulWidget {
 class _BottomNavigationTravelinState extends State<BottomNavigationTravelin> {
   int _selectedIndex = 0;
   var bottomTextStyle =
-      GoogleFonts.poppins(fontSize: 12, fontWeight: FontWeight.w500);
+  GoogleFonts.poppins(fontSize: 12, fontWeight: FontWeight.w500);
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
   }
+
+
 
   @override
   Widget build(BuildContext context) {

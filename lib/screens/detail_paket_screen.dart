@@ -4,6 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconly/iconly.dart';
 import 'package:travelin_mobile_apps/constants/color_constant.dart';
@@ -229,17 +230,7 @@ class DetailPaketScreen extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Container(
-                      child: ReadMoreText(
-                        travel_route,
-                        style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.normal,
-                            color: mSubtitleColor),
-                        trimLines: 2,
-                        colorClickableText: mBlueColor,
-                        trimMode: TrimMode.Line,
-                        trimCollapsedText: '... Baca selengkapnya >',
-                        trimExpandedText: ' Tutup',
-                      ),
+                      child: Html(data: """ $travel_route """),
                     ),
                   ),
 
@@ -264,17 +255,7 @@ class DetailPaketScreen extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Container(
-                      child: ReadMoreText(
-                        itinary,
-                        style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.normal,
-                            color: mSubtitleColor),
-                        trimLines: 2,
-                        colorClickableText: mBlueColor,
-                        trimMode: TrimMode.Line,
-                        trimCollapsedText: '... Baca selengkapnya >',
-                        trimExpandedText: ' Tutup',
-                      ),
+                      child: Html(data: """ $itinary """),
                     ),
                   ),
 
@@ -299,17 +280,7 @@ class DetailPaketScreen extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Container(
-                      child: ReadMoreText(
-                        price_detail,
-                        style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.normal,
-                            color: mSubtitleColor),
-                        trimLines: 2,
-                        colorClickableText: mBlueColor,
-                        trimMode: TrimMode.Line,
-                        trimCollapsedText: '... Baca selengkapnya >',
-                        trimExpandedText: ' Tutup',
-                      ),
+                      child: Html(data: """ $price_detail """),
                     ),
                   ),
 

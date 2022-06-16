@@ -26,9 +26,6 @@ class _ScreenHomeState extends State<ScreenHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //Bottom Navbar
-      bottomNavigationBar: BottomNavigationTravelin(),
-
       //Body
       body: SafeArea(
           child: Container(
@@ -48,7 +45,7 @@ class _ScreenHomeState extends State<ScreenHome> {
                       style: GoogleFonts.poppins(
                           fontSize: 24,
                           fontWeight: FontWeight.w700,
-                          color: mBlueColor),
+                          color: Colors.orange[400]),
                     ),
                   ),
                   Container(
