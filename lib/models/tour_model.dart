@@ -39,7 +39,7 @@ class Tour {
   }
 
   static Future<List<Tour>> getTour(String id) async {
-    String api_url = "http://192.168.1.5/api/cities?id=" + id;
+    String api_url = "http://192.168.1.3/api/cities?id=" + id;
 
     var apiResult = await http.get(Uri.parse(api_url));
     var jsonObject = json.decode(apiResult.body);

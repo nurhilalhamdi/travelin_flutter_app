@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:travelin_mobile_apps/screens/cek_order_screen.dart';
-import 'package:travelin_mobile_apps/screens/home_screen.dart';
-import 'package:travelin_mobile_apps/screens/paket_tour_screen.dart';
+import 'package:travelin_mobile_apps/screens/res_cek_order_screen.dart';
 import 'package:travelin_mobile_apps/screens/screen_home.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -102,7 +101,7 @@ class _MainScreen extends State<MainScreen> {
         return ScreenCekOrder();
         break;
       case 2:
-        return ScreenHome();
+        return ScreenCekOrder();
         break;
       default:
         return ScreenHome();

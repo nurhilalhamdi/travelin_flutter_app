@@ -35,6 +35,8 @@ dependencies:
   http: ^0.13.4
   readmore: ^2.1.0
   flutter_html: ^3.0.0-alpha.5
+  intl: ^0.17.0
+  flutter_launch: ^0.3.0
 
   # flutter_swiper: ^1.1.6
   # carousel_slider: ^4.1.1
