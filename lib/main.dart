@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:travelin_mobile_apps/screens/all_paket_screen.dart';
 import 'package:travelin_mobile_apps/screens/cek_order_screen.dart';
 import 'package:travelin_mobile_apps/screens/res_cek_order_screen.dart';
 import 'package:travelin_mobile_apps/screens/screen_home.dart';
@@ -68,12 +69,18 @@ class _MainScreen extends State<MainScreen> {
           ),
           BottomNavigationBarItem(
             icon: _selectedIndex == 1
+                ? Icon(IconlyBold.category)
+                : Icon(IconlyLight.category),
+            label: 'List Paket',
+          ),
+          BottomNavigationBarItem(
+            icon: _selectedIndex == 2
                 ? Icon(IconlyBold.wallet)
                 : Icon(IconlyLight.wallet),
             label: 'Cek Pemesanan',
           ),
           BottomNavigationBarItem(
-            icon: _selectedIndex == 2
+            icon: _selectedIndex == 3
                 ? Icon(IconlyBold.document)
                 : Icon(IconlyLight.document),
             label: 'Cara Pemesanan',
@@ -98,9 +105,12 @@ class _MainScreen extends State<MainScreen> {
         return ScreenHome();
         break;
       case 1:
-        return ScreenCekOrder();
+        return AllPaketTourScreen();
         break;
       case 2:
+        return ScreenCekOrder();
+        break;
+      case 3:
         return ScreenCekOrder();
         break;
       default:
