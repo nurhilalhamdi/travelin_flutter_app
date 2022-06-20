@@ -83,7 +83,7 @@ class _MainScreen extends State<MainScreen> {
             icon: _selectedIndex == 3
                 ? Icon(IconlyBold.document)
                 : Icon(IconlyLight.document),
-            label: 'Cara Pemesanan',
+            label: 'FAQ',
           ),
         ],
         currentIndex: _selectedIndex,
