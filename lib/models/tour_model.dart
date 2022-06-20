@@ -25,7 +25,7 @@ class Tour {
     required this.id_kota,
   });
 
-  factory Tour.get_tour(Map<String, dynamic> object) {
+  factory Tour.fromJson(Map<String, dynamic> object) {
     return Tour(
         id: object['id'].toString(),
         title: object['title'].toString(),
@@ -36,23 +36,5 @@ class Tour {
         price_detail: object['price_detail'].toString(),
         image: object['image'].toString(),
         id_kota: object['id_kota'].toString());
-  }
-
-  static Future<List<Tour>> getTour(String id) async {
-    String api_url = "http://192.168.1.5/api/cities?id=" + id;
-
-    var apiResult = await http.get(Uri.parse(api_url));
-    var jsonObject = json.decode(apiResult.body);
-
-    List<dynamic> listTour = (jsonObject as Map<String, dynamic>)['tour'];
-
-    List<Tour> tours = [];
-
-    for (int i = 0; i < listTour.length; i++) {
-      tours.add(Tour.get_tour(listTour[i]));
-    }
-    print(apiResult.body);
-
-    return tours;
   }
 }

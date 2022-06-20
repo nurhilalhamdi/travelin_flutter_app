@@ -1,57 +1,72 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconly/iconly.dart';
 import 'package:travelin_mobile_apps/constants/color_constant.dart';
-import 'package:travelin_mobile_apps/models/recomendation_model.dart';
+import 'package:travelin_mobile_apps/models/tour_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:travelin_mobile_apps/screens/detail_paket_screen.dart';
 
-class PaketTourScreen extends StatefulWidget {
-  RecommendedModel recommendedModel;
-  PaketTourScreen({Key? key, required this.recommendedModel}) : super(key: key);
+class AllPaketTourScreen extends StatefulWidget {
+  AllPaketTourScreen({Key? key}) : super(key: key);
 
   @override
-  State<PaketTourScreen> createState() => _PaketTourScreenState();
+  State<AllPaketTourScreen> createState() => _AllPaketTourScreenState();
 }
 
-class _PaketTourScreenState extends State<PaketTourScreen> {
+class _AllPaketTourScreenState extends State<AllPaketTourScreen> {
   String output = "Tidak Ada Data";
+  List<Tour> tour = [];
+  List<Tour> tourOnSearch = [];
 
-  List tour = [];
   bool isLoading = false;
+  TextEditingController searchController = TextEditingController(text: "");
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    this.fetchTour(widget.recommendedModel.id);
-  }
-
-  //Mengambil Data Paket Tour Berdasarkan Id Kota
-  fetchTour(String id) async {
-    setState(() {
-      isLoading = true;
-    });
-
+  static Future<List<Tour>> fetchTours() async {
     /*1. Untuk IP Address silahkan ganti dengan IP adress masing2
       2. Pindahkan Project laravel trivelin di xampp->htdocs
       3. Kemudian lakukan git di folder trivelin-web yang ada di htdocs tadi
       4. lalu jalankan "php artisan serve --host 192.168.1.5 --port 80" -> menggunakan ip adress masing2
       5. lalu jalankan xampp apache*/
+    var url = "http://192.168.1.3/api/tours?limit=25";
+    final response = await http.get(Uri.parse(url));
 
-    var url = "http://192.168.1.3/api/cities?id=" + id;
-    var response = await http.get(Uri.parse(url));
-    // print(response.body);
     if (response.statusCode == 200) {
-      var items = json.decode(response.body)['tour'];
+      return compute(parseUsers, response.body);
+    }
+    else {
+      throw Exception('Failed to load tour');
+    }
+  }
+
+  static List<Tour> parseUsers(String responseBody) {
+    final parsed = jsonDecode(responseBody)['data'].cast<Map<String, dynamic>>();
+
+    return parsed.map<Tour>((json) => Tour.fromJson(json)).toList();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    this.fetchTour();
+  }
+
+  //Mengambil Data Paket Tour
+  fetchTour() async {
+    setState(() {
+      isLoading = true;
+    });
+    var data = await fetchTours();
+    List<Tour> _tours = data as List<Tour>;
+    if (_tours.length != 0) {
       setState(() {
-        tour = items;
+        tour = _tours;
         isLoading = false;
       });
     } else {
@@ -62,138 +77,113 @@ class _PaketTourScreenState extends State<PaketTourScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-
-    /*24 is for notification bar on Android*/
-    final double itemHeight = (size.height - kToolbarHeight - 40) / 2;
-    final double itemWidth = size.width / 2;
-
     return Scaffold(
-      body: Column(children: <Widget>[
-        Stack(
-          children: <Widget>[
-            Container(
-              height: 250,
-              decoration: BoxDecoration(
-                color: mBackgroundColor,
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(20),
-                    bottomRight: Radius.circular(20)),
-              ),
-            ),
-            Container(
-              height: 70,
-              margin: EdgeInsets.only(top: 28.8, left: 28.8, right: 28.8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Container(
-                      height: 57.6,
-                      width: 57.6,
-                      padding: EdgeInsets.all(18),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(9.6),
-                        color: Color(0x080a0928),
-                      ),
-                      child: Icon(
-                        IconlyLight.arrow_left,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    height: 57.6,
-                    width: 57.6,
-                    padding: EdgeInsets.all(18),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(9.6),
-                      color: Color(0x080a0928),
-                    ),
-                    child: Icon(IconlyLight.search),
-                  ),
-                ],
-              ),
-            ),
-
-            //Text Widget untuk Selamat Datang di kota Makassar
-            Positioned(
-              bottom: 30.0,
-              child: Container(
-                height: 70,
-                margin: EdgeInsets.only(top: 28.8, left: 28.8, right: 28.8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Container(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Selamat Datang',
-                            style: GoogleFonts.poppins(
-                                fontSize: 20, fontWeight: FontWeight.w700),
-                          ),
-                          Text(
-                            "Di " + widget.recommendedModel.name,
-                            style: GoogleFonts.poppins(
-                                fontSize: 18, fontWeight: FontWeight.normal),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      width: 100,
-                    ),
-                    VerticalDivider(),
-                    Container(
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                child: Container(
+                  height: 70,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  width: MediaQuery.of(context).size.width,
+                  margin: EdgeInsets.only(top: 28.8, left: 28.8, right: 28.8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      Container(
                         child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // Your elements here
-                            Padding(
-                              padding: EdgeInsets.only(right: 5),
-                              child: Text(
-                                tour.length.toString(),
-                                style: GoogleFonts.poppins(
-                                    fontSize: 20, fontWeight: FontWeight.w700),
-                              ),
-                            ),
-                            Align(
-                              alignment: Alignment.bottomLeft,
-                              child: Text(
-                                'wisata',
-                                style: GoogleFonts.poppins(
-                                    fontSize: 12, fontWeight: FontWeight.w700),
-                              ),
+                            Text(
+                              'Trivelin',
+                              style: GoogleFonts.poppins(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.orange[400]),
                             ),
                           ],
                         ),
-                        Text(
-                          'Lokasi',
-                          style: GoogleFonts.poppins(
-                              color: mSubtitleColor,
-                              fontSize: 12,
-                              fontWeight: FontWeight.normal),
-                        ),
-                      ],
-                    )),
-                  ],
+                      ),
+                      Row(
+                          children: <Widget>[
+                            VerticalDivider(color: Colors.grey[500], thickness: 3,),
+                            SizedBox(width: 8,),
+                            Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  // Your elements here
+                                  Container(
+                                    child: Text(
+                                      tour.length.toString(),
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 20, fontWeight: FontWeight.w700),
+                                    ),
+                                  ),
+                                  Align(
+                                    alignment: Alignment.bottomLeft,
+                                    child: Text(
+                                      'wisata',
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 12, fontWeight: FontWeight.w700),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Text(
+                                'Lokasi',
+                                style: GoogleFonts.poppins(
+                                    color: mSubtitleColor,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.normal),
+                              ),
+                            ],
+                          )]),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
-        getBody()
-      ]),
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 12,horizontal: 24),
+                height: 50,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.circular(12)
+                ),
+                child: Center(
+                  child: Row(
+                    children: [
+                      Icon(Icons.search),
+                      SizedBox(width: 16,),
+                      Expanded(child: TextFormField(
+                        onChanged: (value) {
+                          setState(() {
+                            tourOnSearch = tour.where((element) => element.title.toLowerCase().contains(value)).toList();
+                            print(tourOnSearch);
+                          });
+                        },
+                        controller: searchController,
+                        decoration: InputDecoration.collapsed(
+                          hintText: "Cari Paket",
+                        ),
+                      ))
+                    ],
+                  ),
+                ),
+              ),
+          getBody()
+        ]),
+      )
     );
   }
+
 
   Widget getBody() {
     if (tour.contains(null) || tour.length < 0 || isLoading) {
@@ -202,8 +192,8 @@ class _PaketTourScreenState extends State<PaketTourScreen> {
         child: Column(children: [
           Center(
               child: CircularProgressIndicator(
-            valueColor: new AlwaysStoppedAnimation<Color>(mBlueColor),
-          )),
+                valueColor: new AlwaysStoppedAnimation<Color>(mBlueColor),
+              )),
         ]),
       );
     } else if (tour.length == 0) {
@@ -237,24 +227,24 @@ class _PaketTourScreenState extends State<PaketTourScreen> {
     }
     return Expanded(
       child: ListView.builder(
-          itemCount: tour.length,
+          itemCount: searchController.text.isNotEmpty ? tourOnSearch.length : tour.length,
           shrinkWrap: true,
           scrollDirection: Axis.vertical,
           itemBuilder: (context, index) {
-            return getItem(tour[index]);
+            return getItem(searchController.text.isNotEmpty ? tourOnSearch[index] : tour[index]);
           }),
     );
   }
 
-  Widget getItem(item) {
-    var title = item['title'];
-    var description = item['description'];
-    var travel_route = item['travel_route'];
-    var itinary = item['itinary'];
-    var price = item['price'];
-    var price_detail = item['price_detail'];
-    var id_kota = item['id_kota'];
-    var image_paket = item['image'];
+  Widget getItem(Tour item) {
+    var title = item.title;
+    var description = item.description;
+    var travel_route = item.travel_route;
+    var itinary = item.itinary;
+    var price = item.price;
+    var price_detail = item.price_detail;
+    var id_kota = item.id_kota;
+    var image_paket = item.image;
     return Card(
       elevation: 0,
       color: Colors.transparent,
