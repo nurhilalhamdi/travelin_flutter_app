@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:travelin_mobile_apps/screens/all_paket_screen.dart';
 import 'package:travelin_mobile_apps/screens/cek_order_screen.dart';
 import 'package:travelin_mobile_apps/screens/res_cek_order_screen.dart';
+import 'package:travelin_mobile_apps/screens/how_order_screen.dart';
 import 'package:travelin_mobile_apps/screens/screen_home.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -27,14 +28,13 @@ class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
 
   @override
-  State<MainScreen> createState() =>
-      _MainScreen();
+  State<MainScreen> createState() => _MainScreen();
 }
 
 class _MainScreen extends State<MainScreen> {
   int _selectedIndex = 0;
   var bottomTextStyle =
-  GoogleFonts.poppins(fontSize: 12, fontWeight: FontWeight.w500);
+      GoogleFonts.poppins(fontSize: 12, fontWeight: FontWeight.w500);
 
   void _onItemTapped(int index) {
     setState(() {
@@ -42,7 +42,7 @@ class _MainScreen extends State<MainScreen> {
     });
   }
 
-  Widget bottomNav(){
+  Widget bottomNav() {
     return Container(
       height: 86.4,
       decoration: BoxDecoration(
@@ -99,8 +99,8 @@ class _MainScreen extends State<MainScreen> {
     );
   }
 
-  Widget body(){
-    switch (_selectedIndex){
+  Widget body() {
+    switch (_selectedIndex) {
       case 0:
         return ScreenHome();
         break;
@@ -111,7 +111,7 @@ class _MainScreen extends State<MainScreen> {
         return ScreenCekOrder();
         break;
       case 3:
-        return ScreenCekOrder();
+        return FaqPage();
         break;
       default:
         return ScreenHome();
@@ -125,6 +125,4 @@ class _MainScreen extends State<MainScreen> {
       body: body(),
     );
   }
-
-
 }
