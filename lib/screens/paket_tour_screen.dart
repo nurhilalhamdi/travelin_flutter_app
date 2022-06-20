@@ -48,7 +48,7 @@ class _PaketTourScreenState extends State<PaketTourScreen> {
       4. lalu jalankan "php artisan serve --host 192.168.1.5 --port 80" -> menggunakan ip adress masing2
       5. lalu jalankan xampp apache*/
 
-    var url = "http://192.168.1.5/api/cities?id=" + id;
+    var url = "http://192.168.1.3/api/cities?id=" + id;
     var response = await http.get(Uri.parse(url));
     // print(response.body);
     if (response.statusCode == 200) {
