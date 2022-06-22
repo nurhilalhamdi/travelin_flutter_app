@@ -8,6 +8,8 @@ import 'package:travelin_mobile_apps/models/order_model.dart';
 import 'package:travelin_mobile_apps/screens/res_cek_order_screen.dart';
 import 'package:travelin_mobile_apps/widgets/button_loading.dart';
 
+import '../constants/variable_const.dart';
+
 
 
 class ScreenCekOrder extends StatefulWidget {
@@ -18,7 +20,7 @@ class ScreenCekOrder extends StatefulWidget {
 }
 
 Future fetchOrder(email,bookingCode) async {
-  var url = "http://192.168.1.3/api/orders?email=${email}&booking_code=${bookingCode}";
+  var url = "${baseUrl}orders?email=${email}&booking_code=${bookingCode}";
   var response = await http.get(Uri.parse(url));
 
   if (response.statusCode == 200) {

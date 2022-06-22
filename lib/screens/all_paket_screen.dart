@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconly/iconly.dart';
 import 'package:travelin_mobile_apps/constants/color_constant.dart';
+import 'package:travelin_mobile_apps/constants/variable_const.dart';
 import 'package:travelin_mobile_apps/models/tour_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:travelin_mobile_apps/screens/detail_paket_screen.dart';
@@ -28,12 +29,7 @@ class _AllPaketTourScreenState extends State<AllPaketTourScreen> {
   TextEditingController searchController = TextEditingController(text: "");
 
   static Future<List<Tour>> fetchTours() async {
-    /*1. Untuk IP Address silahkan ganti dengan IP adress masing2
-      2. Pindahkan Project laravel trivelin di xampp->htdocs
-      3. Kemudian lakukan git di folder trivelin-web yang ada di htdocs tadi
-      4. lalu jalankan "php artisan serve --host 192.168.1.5 --port 80" -> menggunakan ip adress masing2
-      5. lalu jalankan xampp apache*/
-    var url = "http://192.168.1.3/api/tours?limit=25";
+    var url = "${baseUrl}tours?limit=50";
     final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
@@ -237,6 +233,7 @@ class _AllPaketTourScreenState extends State<AllPaketTourScreen> {
   }
 
   Widget getItem(Tour item) {
+    var id = item.id;
     var title = item.title;
     var description = item.description;
     var travel_route = item.travel_route;
@@ -253,6 +250,7 @@ class _AllPaketTourScreenState extends State<AllPaketTourScreen> {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => DetailPaketScreen(
+                id: id,
                 title: title,
                 description: description,
                 travel_route: travel_route,

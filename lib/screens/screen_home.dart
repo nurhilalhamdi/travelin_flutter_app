@@ -10,7 +10,6 @@ import 'package:travelin_mobile_apps/models/recomendation_model.dart';
 import 'package:travelin_mobile_apps/models/tour_model.dart';
 import 'package:travelin_mobile_apps/screens/paket_tour_screen.dart';
 import 'package:travelin_mobile_apps/widgets/CustomTabIndicator.dart';
-import 'package:travelin_mobile_apps/widgets/bottom_navigation_travelin.dart';
 import 'package:http/http.dart' as http;
 import 'detail_news.dart';
 
