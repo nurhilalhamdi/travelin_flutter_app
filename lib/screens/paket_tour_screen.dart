@@ -12,6 +12,8 @@ import 'package:travelin_mobile_apps/models/recomendation_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:travelin_mobile_apps/screens/detail_paket_screen.dart';
 
+import '../constants/variable_const.dart';
+
 class PaketTourScreen extends StatefulWidget {
   RecommendedModel recommendedModel;
   PaketTourScreen({Key? key, required this.recommendedModel}) : super(key: key);
@@ -39,13 +41,7 @@ class _PaketTourScreenState extends State<PaketTourScreen> {
       isLoading = true;
     });
 
-    /*1. Untuk IP Address silahkan ganti dengan IP adress masing2
-      2. Pindahkan Project laravel trivelin di xampp->htdocs
-      3. Kemudian lakukan git di folder trivelin-web yang ada di htdocs tadi
-      4. lalu jalankan "php artisan serve --host 192.168.1.5 --port 80" -> menggunakan ip adress masing2
-      5. lalu jalankan xampp apache*/
-
-    var url = "http://192.168.1.3/api/cities?id=" + id;
+    var url = "${baseUrl}cities?id=" + id;
     var response = await http.get(Uri.parse(url));
     // print(response.body);
     if (response.statusCode == 200) {
@@ -247,6 +243,7 @@ class _PaketTourScreenState extends State<PaketTourScreen> {
   }
 
   Widget getItem(item) {
+    var id = item['id'];
     var title = item['title'];
     var description = item['description'];
     var travel_route = item['travel_route'];
@@ -263,6 +260,7 @@ class _PaketTourScreenState extends State<PaketTourScreen> {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => DetailPaketScreen(
+                id:id,
                 title: title,
                 description: description,
                 travel_route: travel_route,

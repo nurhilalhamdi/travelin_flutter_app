@@ -12,6 +12,8 @@ import 'package:travelin_mobile_apps/models/recomendation_model.dart';
 import 'package:travelin_mobile_apps/models/tour_model.dart';
 import 'package:readmore/readmore.dart';
 
+import 'add_order_screen.dart';
+
 extension StringCasingExtension on String {
   String toCapitalized() =>
       length > 0 ? '${this[0].toUpperCase()}${substring(1).toLowerCase()}' : '';
@@ -23,7 +25,7 @@ extension StringCasingExtension on String {
 
 class DetailPaketScreen extends StatelessWidget {
   final _pageController = PageController();
-
+  final String id;
   final String title;
   final String description;
   final String travel_route;
@@ -34,6 +36,7 @@ class DetailPaketScreen extends StatelessWidget {
   final String image_paket;
   DetailPaketScreen({
     Key? key,
+    required this.id,
     required this.title,
     required this.description,
     required this.travel_route,
@@ -306,7 +309,13 @@ class DetailPaketScreen extends StatelessWidget {
                               primary: Colors.white,
                               textStyle: const TextStyle(fontSize: 20),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => AddOrderScreen(idTour: id,),
+                                ),
+                              );
+                            },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [

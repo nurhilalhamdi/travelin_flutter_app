@@ -36,7 +36,7 @@ class Order {
         id : json['id'],
         tour_date : json['tour_date'],
         status : json['status'],
-        booking_code: json['booking_code'],
+        booking_code: json['booking_code'].toString(),
         quantity : json['quantity'],
         name : json['name'],
         phone_number : json['phone_number'],
@@ -48,4 +48,18 @@ class Order {
         price : json['tour']['price']
     );
   }
+
+  Map<String,dynamic> toJson(){
+    return {
+      "tour_date" : tour_date,
+      "status" : status,
+      "quantity" : quantity,
+      "name" : name,
+      "phone_number" : phone_number,
+      "email" : email,
+      "address" : address,
+      "tour_id" : tour_id,
+    };
+  }
+
 }
