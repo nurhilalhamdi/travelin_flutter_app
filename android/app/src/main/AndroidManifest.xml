@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="kel8.travelin.travelin_mobile_apps">
+    <uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="travelin_mobile_apps"
         android:name="${applicationName}"
