@@ -243,7 +243,7 @@ class _PaketTourScreenState extends State<PaketTourScreen> {
   }
 
   Widget getItem(item) {
-    var id = item['id'];
+    var id = item['id'].toString();
     var title = item['title'];
     var description = item['description'];
     var travel_route = item['travel_route'];
@@ -260,7 +260,7 @@ class _PaketTourScreenState extends State<PaketTourScreen> {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => DetailPaketScreen(
-                id:id,
+                id: id,
                 title: title,
                 description: description,
                 travel_route: travel_route,
