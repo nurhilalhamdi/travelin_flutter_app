@@ -260,7 +260,7 @@ class _PaketTourScreenState extends State<PaketTourScreen> {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => DetailPaketScreen(
-                id:id,
+                id: id,
                 title: title,
                 description: description,
                 travel_route: travel_route,
