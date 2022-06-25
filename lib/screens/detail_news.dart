@@ -74,11 +74,11 @@ class Detail_news extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
-                  '$title',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 10),
+                 Text(
+                   '$title',
+                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                 ),
+                 SizedBox(height: 10),
                 Text(
                   '$publishedAt',
                   style: TextStyle(fontStyle: FontStyle.italic),

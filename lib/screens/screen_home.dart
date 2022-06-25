@@ -252,7 +252,7 @@ class _ScreenHomeState extends State<ScreenHome> {
   }
   Future _getData()async{
     try{
-      final response =await http.get(Uri.parse('https://newsapi.org/v2/top-headlines?country=id&apiKey=50925ca11f98492ab5d8164dee1c8e09'));
+      final response =await http.get(Uri.parse('https://newsapi.org/v2/everything?q=wisata%20makassar&from=2022-05-25&sortBy=publishedAt&apiKey=50925ca11f98492ab5d8164dee1c8e09'));
 
       if(response.statusCode==200){
         final data=json.decode(response.body);

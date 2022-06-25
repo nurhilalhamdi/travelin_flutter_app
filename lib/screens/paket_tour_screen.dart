@@ -243,7 +243,7 @@ class _PaketTourScreenState extends State<PaketTourScreen> {
   }
 
   Widget getItem(item) {
-    var id = item['id'];
+    var id = item['id'].toString();
     var title = item['title'];
     var description = item['description'];
     var travel_route = item['travel_route'];
@@ -377,7 +377,7 @@ class _PaketTourScreenState extends State<PaketTourScreen> {
     } else {
       return Image(
         width: 110.0,
-        image: NetworkImage("http://192.168.1.5/storage/" + imagekota),
+        image: NetworkImage("http://192.168.43.164/storage/" + imagekota),
         fit: BoxFit.cover,
       );
     }
